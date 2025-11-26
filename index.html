@@ -9,7 +9,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -77,6 +77,17 @@
             font-size: 1rem;
         }
         
+        .btn-primary {
+            background: var(--primary);
+            color: var(--text-main);
+            box-shadow: 0 5px 20px rgba(124, 58, 237, 0.5);
+        }
+        .btn-primary:hover {
+            background: #6d28d9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 30px rgba(124, 58, 237, 0.7);
+        }
+        
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 0 20px rgba(255,255,255,0.4);
@@ -92,7 +103,31 @@
             background: rgba(34, 211, 238, 0.1);
         }
 
-        /* --- HEADER --- */
+        /* INPUT/FORM STYLES */
+        .form-control {
+            width: 100%;
+            padding: 14px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            color: var(--text-main);
+            transition: border-color 0.3s;
+        }
+        .form-control::placeholder {
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+        .form-control option {
+            background: var(--bg-color);
+            color: var(--text-main);
+        }
+        
+        /* --- HEADER & NAVIGATION --- */
         header {
             padding: 24px 0;
             position: fixed;
@@ -119,10 +154,10 @@
             align-items: center;
             text-align: center;
             position: relative;
+            /* Padding original para escritorio */
             padding-top: 80px;
         }
         
-        /* Grid background effect */
         .bg-grid {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -163,7 +198,7 @@
             color: var(--secondary);
         }
 
-        /* --- MARQUEE (SCROLLING TEXT) --- */
+        /* --- MARQUEE --- */
         .marquee-container {
             padding: 40px 0;
             background: var(--bg-color);
@@ -191,7 +226,7 @@
         
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* --- SERVICES --- */
+        /* --- SERVICES (EXPERTISE) --- */
         .services { padding: 120px 0; }
         .section-header { margin-bottom: 80px; text-align: center; }
         .section-header h2 { font-size: 3rem; margin-bottom: 15px; }
@@ -199,22 +234,29 @@
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
         
-        .service-card {
+        .service-card, .price-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
             padding: 40px;
             border-radius: var(--radius);
             position: relative;
-            overflow: hidden;
+            /* IMPORTANTE: overflow: hidden estaba cortando el badge. Se sobreescribe abajo para price-card */
+            overflow: hidden; 
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            group:hover;
+            display: flex;
+            flex-direction: column;
         }
 
-        .service-card:hover {
+        /* --- ARREGLO VISUALIZACIÓN BADGE --- */
+        .price-card {
+            overflow: visible !important; /* Permite que el badge "salga" de la tarjeta */
+        }
+
+        .service-card:hover, .price-card:hover {
             transform: translateY(-10px);
             border-color: rgba(124, 58, 237, 0.5);
             box-shadow: 0 20px 40px -20px rgba(124, 58, 237, 0.3);
@@ -257,6 +299,31 @@
         }
         .tool-item { display: flex; align-items: center; gap: 10px; font-size: 1.2rem; font-weight: 600; }
 
+        /* --- PRECIOS STYLES --- */
+        .pricing { padding: 120px 0; }
+        
+        .price-card.featured {
+            border: 2px solid var(--primary);
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.4);
+            z-index: 2;
+        }
+        .price-card.featured:hover { transform: translateY(-8px) scale(1.03); }
+        
+        .price-tag {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+        
+        .price-features li {
+            display: flex; align-items: start; gap: 10px;
+            color: #d1d5db; margin-bottom: 10px; font-size: 0.95rem;
+        }
+        .price-features i { color: var(--secondary); font-size: 0.8rem; margin-top: 4px;}
+        .price-card.featured .price-features i { color: var(--primary); }
+
         /* --- WORK / PORTFOLIO --- */
         .portfolio { padding: 120px 0; }
         
@@ -293,7 +360,7 @@
         }
 
         /* --- CTA / FOOTER --- */
-        .cta-section { padding: 100px 0; }
+        .cta-section, .contact-section { padding: 100px 0; }
         .cta-card {
             background: linear-gradient(180deg, rgba(124, 58, 237, 0.1) 0%, rgba(3, 0, 20, 0) 100%);
             border: 1px solid rgba(124, 58, 237, 0.3);
@@ -310,13 +377,51 @@
             font-size: 0.9rem;
         }
 
-        /* RESPONSIVE */
+        /* RESPONSIVE MEDIA QUERIES */
         @media(max-width: 900px) {
             .bento-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
             .bento-item.large { grid-column: auto; height: 300px; }
             .bento-item { height: 300px; }
+            .price-card.featured { transform: scale(1); }
+            .price-card.featured:hover { transform: translateY(-5px); }
+        }
+        @media(max-width: 768px) {
+            /* --- ARREGLO SOBREPOSICIÓN MENU --- */
+            .hero { 
+                padding-top: 140px; /* Aumentado para bajar el contenido en móvil */
+            }
+            
+            .hero-tags {
+                flex-wrap: wrap; /* Permite que los tags se acomoden si falta espacio */
+            }
+
+            .section-header h2 { font-size: 2.2rem; }
+            .services-grid { grid-template-columns: 1fr; } 
+            .service-card, .price-card { padding: 24px; }
+            .price-tag { font-size: 2.5rem; }
         }
     </style>
+
+    <script>
+        function submitContactForm(event) {
+            event.preventDefault();
+            const form = event.target;
+            const statusMessage = document.getElementById('form-status');
+            
+            statusMessage.innerHTML = '<i class="fa-solid fa-check-circle"></i> ¡Mensaje enviado con éxito! Pronto nos pondremos en contacto.';
+            statusMessage.style.backgroundColor = 'rgba(34, 211, 238, 0.1)';
+            statusMessage.style.borderColor = 'var(--secondary)';
+            statusMessage.style.color = 'var(--secondary)';
+            statusMessage.style.display = 'flex';
+            
+            form.reset();
+
+            setTimeout(() => {
+                statusMessage.style.display = 'none';
+                statusMessage.innerHTML = '';
+            }, 6000);
+        }
+    </script>
 </head>
 <body>
 
@@ -326,10 +431,11 @@
                 <div class="logo">ZBC <span style="color:var(--primary)">STUDIO</span>.</div>
                 <div class="nav-links">
                     <a href="#servicios">Expertise</a>
-                    <a href="#proceso">Proceso</a>
+                    <a href="#precios">Planes</a> 
                     <a href="#portfolio">Trabajos</a>
+                    <a href="#contacto">Contacto</a> 
                 </div>
-                <a href="mailto:hola@zbcstudio.com" class="btn">Agendar Llamada</a>
+                <a href="#contacto" class="btn btn-primary">Agendar Llamada</a>
             </nav>
         </div>
     </header>
@@ -347,7 +453,7 @@
             <p>Dejamos de lado lo "bonito" para enfocarnos en lo que funciona. Agencia creativa especializada en retención visual, diseño de interfaces y estrategias de tráfico pago.</p>
             
             <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                <a href="#servicios" class="btn">Ver Soluciones</a>
+                <a href="#servicios" class="btn btn-primary">Ver Soluciones</a>
                 <a href="#portfolio" class="btn btn-outline">Ver Reel de Agencia</a>
             </div>
         </div>
@@ -383,6 +489,7 @@
         </div>
     </section>
 
+    <!-- SECCIÓN EXPERTISE -->
     <section class="services" id="servicios">
         <div class="container">
             <div class="section-header">
@@ -426,6 +533,95 @@
             </div>
         </div>
     </section>
+    
+    <!-- NUEVA SECCIÓN: PRECIOS (INTEGRADA) -->
+    <section class="pricing" id="precios">
+        <div class="container">
+            <div class="section-header">
+                <h2 style="font-size: 3.5rem;">Planes de <span class="text-gradient">Servicio</span></h2>
+                <p>Elige el paquete que mejor se adapte a tu nivel de operación. La escalabilidad está garantizada.</p>
+            </div>
+
+            <div class="services-grid"> 
+                
+                <!-- Plan 1 -->
+                <div class="price-card">
+                    <h3 style="color: var(--secondary);">Plan Soporte Técnico</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">Mantenimiento Web Esencial.</p>
+                    
+                    <div style="display: flex; align-items: baseline; margin-bottom: 20px;">
+                        <span class="price-tag">$350.000</span>
+                        <span style="font-size: 1.25rem; color: var(--text-muted); margin-left: 8px;">/mes</span>
+                    </div>
+                    
+                    <ul class="price-features" style="flex-grow: 1; margin-bottom: 30px;">
+                        <li><i class="fa-solid fa-check"></i> Blindaje de WordPress y Plugins</li>
+                        <li><i class="fa-solid fa-check"></i> Copias de Seguridad Mensuales</li>
+                        <li><i class="fa-solid fa-check"></i> 2 Horas de Carga de Novedades</li>
+                        <li><i class="fa-solid fa-check"></i> Monitoreo de Dominio y Hosting</li>
+                        <li style="opacity: 0.5;"><i class="fa-solid fa-times" style="color: var(--text-muted);"></i> Gestión de Contenido (No Incluida)</li>
+                    </ul>
+
+                    <a href="#contacto" class="btn btn-outline" style="border-radius: 12px; padding: 12px 20px; margin-top: auto;">
+                        Empezar con Soporte
+                    </a>
+                </div>
+
+                <!-- Plan 2 (Destacado) -->
+                <div class="price-card featured">
+                    <!-- Ajuste de posición del badge: Ahora está dentro del card y visible -->
+                    <div style="position: absolute; top: 15px; right: 15px; background: var(--primary); padding: 5px 15px; border-radius: 100px; font-weight: 700; font-size: 0.85rem; letter-spacing: 1px; z-index: 5;">
+                        RECOMENDADO
+                    </div>
+                    <h3 style="color: var(--text-main);">Plan Visibilidad Competitiva</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">Web + Contenido de Alto Volumen.</p>
+
+                    <div style="display: flex; align-items: baseline; margin-bottom: 20px;">
+                        <span class="price-tag" style="color: var(--primary);">$950.000</span>
+                        <span style="font-size: 1.25rem; color: var(--text-muted); margin-left: 8px;">/mes</span>
+                    </div>
+
+                    <ul class="price-features" style="flex-grow: 1; margin-bottom: 30px;">
+                        <li><i class="fa-solid fa-star" style="color: var(--primary);"></i> <span style="font-weight: 600;">Todo el Plan Soporte Técnico</span></li>
+                        <li><i class="fa-solid fa-star" style="color: var(--primary);"></i> <span style="font-weight: 600;">12 Posts Estáticos/Carruseles</span></li>
+                        <li><i class="fa-solid fa-star" style="color: var(--primary);"></i> <span style="font-weight: 600;">2 Reels/TikToks de Retención</span></li>
+                        <li><i class="fa-solid fa-star" style="color: var(--primary);"></i> Diseño 'Premium' (Figma)</li>
+                        <li><i class="fa-solid fa-star" style="color: var(--primary);"></i> Copywriting Optimizado (SEO)</li>
+                    </ul>
+
+                    <a href="#contacto" class="btn btn-primary" style="border-radius: 12px; padding: 12px 20px; margin-top: auto;">
+                        ¡Quiero el Plan Visibilidad!
+                    </a>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="price-card">
+                    <h3 style="color: var(--secondary);">Plan Expansión y Venta</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">Web + Redes + Publicidad Estratégica.</p>
+
+                    <div style="display: flex; align-items: baseline; margin-bottom: 20px;">
+                        <span class="price-tag">$1.900.000</span>
+                        <span style="font-size: 1.25rem; color: var(--text-muted); margin-left: 8px;">/mes</span>
+                    </div>
+
+                    <ul class="price-features" style="flex-grow: 1; margin-bottom: 30px;">
+                        <li><i class="fa-solid fa-rocket" style="color: var(--secondary);"></i> <span style="font-weight: 600;">Todo el Plan Visibilidad</span></li>
+                        <li><i class="fa-solid fa-rocket" style="color: var(--secondary);"></i> Aumento a 16 Posts + 6 Reels</li>
+                        <li><i class="fa-solid fa-rocket" style="color: var(--secondary);"></i> Gestión y Optimización de Pauta (Ads)</li>
+                        <li><i class="fa-solid fa-rocket" style="color: var(--secondary);"></i> Reporte Mensual Detallado de ROI</li>
+                        <li><i class="fa-solid fa-rocket" style="color: var(--secondary);"></i> Foco en Conversión y Clientes B2B</li>
+                    </ul>
+
+                    <div style="margin-top: 24px; width: 100%;"> 
+                        <a href="#contacto" class="btn btn-outline" style="border-radius: 12px; padding: 12px 20px; display: block; text-align: center;">
+                            Consultar Plan Avanzado
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
 
     <section class="portfolio" id="portfolio">
         <div class="container">
@@ -435,28 +631,28 @@
             
             <div class="bento-grid">
                 <div class="bento-item large">
-                    <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop" alt="Edición Video">
+                    <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1000&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1000x500/0E0E1A/94a3b8?text=Campaña+Video'" alt="Edición Video">
                     <div class="bento-content">
                         <h3>Campaña Moda Urbana</h3>
                         <p style="color:#ccc; font-size:0.9rem;">Video Marketing & Ads</p>
                     </div>
                 </div>
                 <div class="bento-item">
-                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1000&auto=format&fit=crop" alt="Dashboard Design">
+                    <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1000&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/500x350/0E0E1A/94a3b8?text=Dashboard+Design'" alt="Dashboard Design">
                     <div class="bento-content">
                         <h3>SaaS Dashboard UI</h3>
                         <p style="color:#ccc; font-size:0.9rem;">Diseño Figma</p>
                     </div>
                 </div>
                 <div class="bento-item">
-                    <img src="https://images.unsplash.com/photo-1557838923-2985c318be48?q=80&w=1000&auto=format&fit=crop" alt="E-commerce">
+                    <img src="https://images.unsplash.com/photo-1557838923-2985c318be48?q=80&w=1000&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/500x350/0E0E1A/94a3b8?text=E-commerce+Redesign'" alt="E-commerce">
                     <div class="bento-content">
                         <h3>Shopify Redesign</h3>
                         <p style="color:#ccc; font-size:0.9rem;">UX Strategy</p>
                     </div>
                 </div>
                 <div class="bento-item large">
-                    <img src="https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=1000&auto=format&fit=crop" alt="Campaña Marketing">
+                    <img src="https://images.unsplash.com/photo-1533750516457-a7f992034fec?q=80&w=1000&auto=format&fit=crop" onerror="this.onerror=null;this.src='https://placehold.co/1000x500/0E0E1A/94a3b8?text=Lanzamiento+Curso+Online'" alt="Campaña Marketing">
                     <div class="bento-content">
                         <h3>Lanzamiento Curso</h3>
                         <p style="color:#ccc; font-size:0.9rem;">Estrategia Completa</p>
@@ -466,14 +662,49 @@
         </div>
     </section>
 
-    <section class="cta-section">
+    <!-- NUEVA SECCIÓN: FORMULARIO DE CONTACTO -->
+    <section class="contact-section" id="contacto">
         <div class="container">
-            <div class="cta-card">
-                <h2>¿Tu marca está lista para el <br><span class="text-gradient">Siguiente Nivel?</span></h2>
-                <p style="color: var(--text-muted); max-width: 600px; margin: 20px auto 40px;">
-                    Deja de perder tiempo buscando tres freelancers diferentes. En ZBC Studio unificamos Estrategia, Diseño y Video bajo un mismo techo.
-                </p>
-                <a href="mailto:zuleidy@zbcstudio.com" class="btn">Solicitar Auditoría Gratis</a>
+            <div class="section-header">
+                <h2 style="font-size: 3.5rem;">Agenda tu <span class="text-gradient">Auditoría Gratis</span></h2>
+                <p>Completa el formulario y te contactaremos en menos de 24 horas para analizar tu estrategia actual.</p>
+            </div>
+
+            <div style="max-width: 600px; margin: 0 auto; background: var(--card-bg); border: 1px solid var(--card-border); padding: 40px; border-radius: var(--radius); backdrop-filter: var(--glass);">
+                <form onsubmit="submitContactForm(event)" style="display: grid; gap: 20px;">
+                    
+                    <div id="form-status" style="display: none; padding: 15px; border-radius: 12px; border: 1px solid; align-items: center; gap: 10px; font-weight: 600;"></div>
+
+                    <div>
+                        <label for="name" style="display: block; color: var(--text-main); margin-bottom: 5px; font-size: 0.9rem;">Nombre Completo</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Ej: Zuleidy Beltran" required>
+                    </div>
+
+                    <div>
+                        <label for="email" style="display: block; color: var(--text-main); margin-bottom: 5px; font-size: 0.9rem;">Correo Electrónico Empresarial</label>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="ejemplo@tuempresa.com" required>
+                    </div>
+
+                    <div>
+                        <label for="service" style="display: block; color: var(--text-main); margin-bottom: 5px; font-size: 0.9rem;">Servicio de Interés</label>
+                        <select id="service" name="service" class="form-control" required style="appearance: none; background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2020%2020%22%20fill%3D%22%2394a3b8%22%3E%3Cpath%20fill-rule%3D%22evenodd%22%20d%3D%22M5.293%207.293a1%201%200%20011.414%200L10%2010.586l3.293-3.293a1%201%200%20111.414%201.414l-4%204a1%201%200%2001-1.414%200l-4-4a1%201%200%20010-1.414z%22%20clip-rule%3D%22evenodd%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 20px top 50%; padding-right: 40px;">
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="video">Video Marketing</option>
+                            <option value="design">Diseño UI/UX</option>
+                            <option value="ads">Paid Media & Ads</option>
+                            <option value="completo">Estrategia Completa (Plan Growth)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="message" style="display: block; color: var(--text-main); margin-bottom: 5px; font-size: 0.9rem;">Cuéntanos sobre tu Proyecto</label>
+                        <textarea id="message" name="message" rows="4" class="form-control" placeholder="¿Cuál es tu objetivo principal en 90 días?" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="border-radius: 12px; margin-top: 10px;">
+                        Enviar Solicitud de Auditoría
+                    </button>
+                </form>
             </div>
         </div>
     </section>
@@ -484,7 +715,7 @@
                 <h3 style="font-size: 1.5rem;">ZBC STUDIO.</h3>
             </div>
             <p>&copy; 2024 Zuleidy Beltran Cifuentes. Bogotá, Colombia.</p>
-            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px;">
+            <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 1.2rem;">
                 <a href="#"><i class="fa-brands fa-instagram"></i></a>
                 <a href="#"><i class="fa-brands fa-linkedin"></i></a>
                 <a href="#"><i class="fa-brands fa-tiktok"></i></a>
